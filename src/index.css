@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App .parent {
+  display: flex;
+  justify-content: space-around;
+}
+
+.col1 {
+  display: flex;
+  flex-direction: column;
+  margin-right: 4%;
+  margin-top: 50px;
+}
+
+.table {
+  display: flex;
+  margin-top: 5%;
+}
+
+.cols .teams span {
+  margin-right: 10%;
+}
+
+.data-table {
+  display: flex;
+}
+
+.data-table .node-parent {
+  margin-right: 10%;
+  min-width: 50px;
+  text-align: center;
+}
+
+.table-node {
+  margin-right: 50px;
+}
+
+.tit {
+  height: 50px;
+}
+
+.col1 span {
+  margin-bottom: 20px;
+}
+
+.node-parent .nodes {
+  margin-bottom: 20px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+  background-color: #dddddd;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.match {
+  /* flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: calc(33% - 1em);
+  margin-bottom: 2em;
+  text-align: center;
+  display: flex;
+  border: 1px solid;
+  flex-direction: column;
+  padding: 0%; */
+  flex-grow: 1;
+  margin-bottom: 2em;
+  text-align: center;
+  display: flex;
+  border: 1px solid;
+  flex-direction: column;
+  padding: 0%;
+}
+
+@media only screen and (min-width: 600px) {
+  .match {
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: calc(33% - 1em);
+  }
+}
+
+.match__player {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.table-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0 32%;
+}
+
+.player-data {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 4.4px 5%;
+  border: 1px solid;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.player-head {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.match.freezed {
+  opacity: 0.4;
+  background-color: antiquewhite;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.chart {
+  display: flex;
+  width: 100%;
+}
+
+.match__player.winner {
+  font-weight: bold;
+  color: currentcolor;
+}
+
+button {
+  margin-top: 10px;
+}
