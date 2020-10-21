@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import "./App.css";
 import { baseAmount, matches, players } from "./data";
-import MatchCard from './MatchCard';
+import MatchCard from "./MatchCard";
 import axios from "axios";
-import MatchTable from './MatchTable';
-import PlayerCharts from './PlayerCharts';
+import MatchTable from "./MatchTable";
+import PlayerCharts from "./PlayerCharts";
 
 export interface IMatchInfo {
   matchName: string;
   matchID: number;
-  players: Array<IUserInfo>
+  players: Array<IUserInfo>;
 }
 
 export interface IUserInfo {
-   userName: string;
-   result: boolean;
+  userName: string;
+  result: boolean;
 }
 
 class CreateMatch implements IMatchInfo {
@@ -22,7 +22,12 @@ class CreateMatch implements IMatchInfo {
   matchName: string;
   players: Array<IUserInfo> = [];
   id: string;
-  constructor(matchName: string, matchID: number, playersArray: IUserInfo[], id: string) {
+  constructor(
+    matchName: string,
+    matchID: number,
+    playersArray: IUserInfo[],
+    id: string
+  ) {
     this.matchID = matchID;
     this.matchName = matchName;
     this.players = playersArray;
@@ -36,58 +41,62 @@ class App extends Component<any, any> {
     this.state = {
       appState: [],
       receivedState: [],
-      tableState: []
-    }
+      tableState: [],
+      temp: 0,
+    };
   }
 
-  componentDidMount(){
-    this.getAllMatch().then(()=> {
-      this.setState({
-        appState: [...this.createobj()]
-      });
-    }).then(()=>{
-      const player: any = {};
-      players.forEach(element => {
-        player[element] = 0;
-      });
-
-      var som = this.state.receivedState.map((node: any)=> {
-        const winners = node.players.filter((node: any) => {
-          return node.result
+  componentDidMount() {
+    this.getAllMatch()
+      .then(() => {
+        this.setState({
+          appState: [...this.createobj()],
+        });
+      })
+      .then(() => {
+        const player: any = {};
+        players.forEach((element) => {
+          player[element] = 0;
         });
 
-        const priceAmount = node.players.length * baseAmount / winners.length
+        var som = this.state.receivedState.map((node: any) => {
+          const winners = node.players.filter((node: any) => {
+            return node.result;
+          });
 
-        node.players.forEach((node:any)=> {
-          if(node.result) {
-            player[node.userName] = player[node.userName] + priceAmount;
-          } 
+          const priceAmount =
+            (node.players.length * baseAmount) / winners.length;
+
+          node.players.forEach((node: any) => {
+            if (node.result) {
+              player[node.userName] = player[node.userName] + priceAmount;
+            }
+          });
+          return {
+            matchID: node.matchID,
+            players: { ...player },
+          };
         });
-        return {
-          matchID: node.matchID,
-          players: {...player}
-        }
-      });
 
-      this.setState({
-        tableState: [...som]
-      });
+        this.setState({
+          tableState: [...som],
+        });
 
-      console.log(som);
-    });
+        console.log(som);
+      });
   }
 
   getPlayerArray(index: number) {
     var result = this.state.receivedState.find((node: any) => {
-      return node.matchID === index
+      return node.matchID === index;
     });
-    if(result) {
+    if (result) {
       return [...result.players];
     } else {
       return players.map((node: string) => {
         return {
           userName: node,
-          result: false
+          result: false,
         } as IUserInfo;
       });
     }
@@ -95,9 +104,9 @@ class App extends Component<any, any> {
 
   getPlayerID(index: number) {
     var result = this.state.receivedState.find((node: any) => {
-      return node.matchID === index
+      return node.matchID === index;
     });
-    if(result) {
+    if (result) {
       return result.id;
     } else {
       return null;
@@ -105,33 +114,54 @@ class App extends Component<any, any> {
   }
 
   createobj() {
-    return matches.map((node:string, index: number): IMatchInfo => {
-      return new CreateMatch(node, index, this.getPlayerArray(index), this.getPlayerID(index));
-    });
+    return matches.map(
+      (node: string, index: number): IMatchInfo => {
+        return new CreateMatch(
+          node,
+          index,
+          this.getPlayerArray(index),
+          this.getPlayerID(index)
+        );
+      }
+    );
   }
 
   getAllMatch() {
-    return axios.get('https://post-match.azurewebsites.net/api/get-match')
-        .then((response: any) => {
-            this.setState({
-              receivedState: [...response.data]
-            })
+    return axios
+      .get("https://post-match.azurewebsites.net/api/get-match")
+      .then((response: any) => {
+        this.setState({
+          receivedState: [...response.data],
         });
+      });
   }
 
   render() {
     return (
       <div className="content">
-        {this.state.appState.map((match: IMatchInfo, index: number)=>{
-          const tableInfo = this.state.tableState.find((node: any)=> {
-            return node.matchID === match.matchID
-          });
-          return <MatchCard {...match} key={index} tableInfo={tableInfo}/>
-        })}
-        <MatchTable tableState={this.state.tableState} />
-        <div className="chart">
-        <PlayerCharts tableState={this.state.tableState}></PlayerCharts>
-        </div>
+        {this.state.temp === 15 &&
+          this.state.appState.map((match: IMatchInfo, index: number) => {
+            const tableInfo = this.state.tableState.find((node: any) => {
+              return node.matchID === match.matchID;
+            });
+            return <MatchCard {...match} key={index} tableInfo={tableInfo} />;
+          })}
+        {this.state.temp !== 15 && (
+          <div className="show">
+            <MatchTable tableState={this.state.tableState} />
+            <div className="chart">
+              <PlayerCharts tableState={this.state.tableState}></PlayerCharts>
+            </div>
+            <button
+              className="final-button"
+              onClick={() => {
+                this.setState({ temp: this.state.temp + 1 });
+              }}
+            >
+              x
+            </button>
+          </div>
+        )}
       </div>
     );
   }
