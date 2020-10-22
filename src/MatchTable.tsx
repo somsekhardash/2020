@@ -72,37 +72,42 @@ class MatchTable extends Component<any, any> {
   //   }
 
   getTableData(tableData: any) {
+    var arr: any = [];
+    while (arr.length < 6) {
+      var r = Math.floor(Math.floor(Math.random() * emojiSet1.length - 1));
+      if (arr.indexOf(r) === -1) arr.push(emojiSet1[r]);
+    }
+    console.log(arr);
+
+    var arr1: any = [];
+    while (arr1.length < 6) {
+      var r = Math.floor(Math.floor(Math.random() * emojiSet2.length - 1));
+      if (arr1.indexOf(r) === -1) arr1.push(emojiSet2[r]);
+    }
+    console.log(arr1);
     return (
       <table className="table-body">
-        {tableData.map((node: any, index: number) => {
-          const amount: any = Object.values(node);
-          return (
-            <tr
-              className={`${amount > 0 ? "green" : "red"} player-data`}
-              key={index}
-            >
-              <span>
-                {amount > 0 ? (
-                  <img
-                    src={
-                      emojiSet1[Math.floor(Math.random() * emojiSet1.length)]
-                    }
-                    alt="loading..."
-                  />
-                ) : (
-                  <img
-                    src={
-                      emojiSet2[Math.floor(Math.random() * emojiSet2.length)]
-                    }
-                    alt="loading..."
-                  />
-                )}
-              </span>
-              <th>{playersMap[Object.keys(node)[0]]}</th>
-              <th className="bold">{Object.values(node)}</th>
-            </tr>
-          );
-        })}
+        <tbody>
+          {tableData.map((node: any, index: number) => {
+            const amount: any = Object.values(node);
+            return (
+              <tr
+                className={`${amount > 0 ? "green" : "red"} player-data`}
+                key={index}
+              >
+                <th>
+                  {amount > 0 ? (
+                    <img src={arr[index]} alt="loading..." />
+                  ) : (
+                    <img src={arr1[index]} alt="loading..." />
+                  )}
+                </th>
+                <th>{playersMap[Object.keys(node)[0]]}</th>
+                <th className="bold">{Object.values(node)}</th>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     );
   }
@@ -122,7 +127,6 @@ class MatchTable extends Component<any, any> {
       tableData = tableData.sort((a: any, b: any) =>
         Number(Object.values(a)) < Number(Object.values(b)) ? 1 : -1
       );
-      console.log(tableData);
     }
 
     return (

@@ -47,6 +47,16 @@ class App extends Component<any, any> {
   }
 
   componentDidMount() {
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let username = params.get("admin");
+
+    if (username === "som") {
+      this.setState({
+        temp: 15,
+      });
+    }
+
     this.getAllMatch()
       .then(() => {
         this.setState({
@@ -81,8 +91,6 @@ class App extends Component<any, any> {
         this.setState({
           tableState: [...som],
         });
-
-        console.log(som);
       });
   }
 
@@ -152,14 +160,6 @@ class App extends Component<any, any> {
             <div className="chart">
               <PlayerCharts tableState={this.state.tableState}></PlayerCharts>
             </div>
-            <button
-              className="final-button"
-              onClick={() => {
-                this.setState({ temp: this.state.temp + 1 });
-              }}
-            >
-              x
-            </button>
           </div>
         )}
       </div>
