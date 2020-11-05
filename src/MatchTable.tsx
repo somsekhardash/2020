@@ -60,9 +60,9 @@ const playersMap: any = {
   player1: "GUDDI",
   player2: "BHAINA",
   player3: "MAMUNI APA",
-  player4: "MUKTI",
+  player4: "PRITI",
   player5: "RANJIT",
-  player6: "PRITI",
+  player6: "MUKTI",
 };
 
 class MatchTable extends Component<any, any> {
