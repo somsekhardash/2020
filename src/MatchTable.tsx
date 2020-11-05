@@ -81,8 +81,8 @@ class MatchTable extends Component<any, any> {
 
     var arr1: any = [];
     while (arr1.length < 6) {
-      var r = Math.floor(Math.floor(Math.random() * emojiSet2.length - 1));
-      if (arr1.indexOf(r) === -1) arr1.push(emojiSet2[r]);
+      var rr = Math.floor(Math.floor(Math.random() * emojiSet2.length - 1));
+      if (arr1.indexOf(rr) === -1) arr1.push(emojiSet2[rr]);
     }
     console.log(arr1);
     return (
