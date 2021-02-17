@@ -10,12 +10,12 @@ interface IMatchCard {
 }
 
 const playersMap: any = {
-  player1: "GUDDI",
-  player2: "BHAINA",
-  player3: "MAMUNI",
-  player4: "PRITI",
-  player5: "RANJIT",
-  player6: "MUKTI",
+  player1: "player1",
+  player2: "player2",
+  player3: "player3",
+  player4: "player4",
+  player5: "player5",
+  player6: "player6",
 };
 
 class MatchCard extends Component<any, any> {
